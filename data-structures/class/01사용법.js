@@ -5,10 +5,12 @@
 class User {
   name = "geonWoong"; // 필드값
 
-  constructor(name) {
-    this.name = name;
+  // 생성자
+  constructor() {
+    this.name;
   }
 
+  // 메소드
   sayHi() {
     console.log(this.name);
   }
@@ -80,10 +82,8 @@ let user2 = new User2("geonn");
 console.log(user2.name);
 user2 = new User2("");
 
-console.clear();
-
 /**
- * @과제
+ * @실습
  */
 
 class Clock {
