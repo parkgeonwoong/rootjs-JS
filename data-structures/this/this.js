@@ -3,6 +3,8 @@
  * @무엇 : "함수를 호출한 객체이다"
  * @왜? : 다른 속성에 접근할 때 유용하다
  * - 바로 앞에서 호출하는 것이라고 생각하자 (obj.main -> this = obj)
+ * @참고
+ * - https://www.youtube.com/watch?v=j6VkGimAs-E&t=923s
  */
 
 // 전역 this
