@@ -1,13 +1,11 @@
-/**
- * @desc : 클래스로 스택만들기
- */
+class Stack<T> {
+  private items: T[];
 
-export default class Stack {
   constructor() {
     this.items = [];
   }
 
-  push(element) {
+  push(element: T) {
     this.items.push(element);
   }
 
@@ -32,15 +30,9 @@ export default class Stack {
   }
 
   print() {
-    return console.log(this.items.toString());
+    console.log(this.items.toString());
   }
 }
 
-const stack = new Stack();
-stack.push(1);
+const stack = new Stack<number>();
 stack.push(5);
-stack.pop();
-stack.print();
-console.log(stack.size());
-
-// console.clear();
