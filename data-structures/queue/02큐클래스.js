@@ -32,7 +32,7 @@ class Queue {
   }
 
   print() {
-    console.log(this.items.toString());
+    console.log(this.items);
   }
 }
 
