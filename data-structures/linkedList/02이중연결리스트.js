@@ -61,6 +61,46 @@ class DoublyLinkedList {
       return false;
     }
   }
+
+  removeAt(index) {
+    if (index > -1 && index < this.length) {
+      let current = this.head,
+        previous,
+        cnt = 0;
+
+      // 첫번째 원소삭제
+      if (index === 0) {
+        this.head = current.next;
+
+        // 원소가 하나뿐인 경우
+        if (this.length === 1) {
+          this.tail = null;
+        } else {
+          this.head.prev = null;
+        }
+      }
+
+      // 마지막 원소삭제
+      else if (index === this.length - 1) {
+        current = this.tail;
+        tail = current.prev;
+        tail.next = null;
+      }
+      // 중간의 원소삭제
+      else {
+        while (cnt++ < index) {
+          previous = current;
+          current = current.next;
+        }
+        previous.next = current.next;
+        current.next.prev = previous;
+      }
+      this.length--;
+      return current.element;
+    } else {
+      return null;
+    }
+  }
 }
 
 const doublyLinkedList = new DoublyLinkedList();
