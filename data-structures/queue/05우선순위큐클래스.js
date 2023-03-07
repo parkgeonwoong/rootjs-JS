@@ -27,8 +27,7 @@ class PriorityQueue {
 
   dequeue() {
     if (this.isEmpty()) {
-      console.log("큐가 빈값입니다.");
-      return;
+      console.log(new Error("큐가 빈값입니다."));
     }
     return this.items.pop();
   }
@@ -52,7 +51,7 @@ class PriorityQueue {
 }
 
 const priorityQueue = new PriorityQueue();
-// priorityQueue.dequeue();
+priorityQueue.dequeue();
 priorityQueue.enqueue(1, 2);
 priorityQueue.enqueue(5, 1);
 priorityQueue.print();
