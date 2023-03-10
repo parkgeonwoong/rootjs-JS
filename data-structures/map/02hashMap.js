@@ -2,7 +2,7 @@
  * @desc : 해시 테이블
  */
 
-class HashTable {
+export default class HashTable {
   constructor() {
     this.table = [];
   }
@@ -45,18 +45,18 @@ class HashTable {
 }
 
 let hash = new HashTable();
-hash.put("park", "park@email.com");
-hash.put("geon", "geon@email.com");
-hash.put("woong", "woong@email.com");
-hash.put("Tyrion", "tyrion@email.com"); // 해시충돌
-hash.put("Aaron", "aaron@email.com"); // 해시충돌
+// hash.put("park", "park@email.com");
+// hash.put("geon", "geon@email.com");
+// hash.put("woong", "woong@email.com");
+// hash.put("Tyrion", "tyrion@email.com"); // 해시충돌
+// hash.put("Aaron", "aaron@email.com"); // 해시충돌
 
-console.log(hash.get("woong"));
-console.log(hash.get("react"));
+// console.log(hash.get("woong"));
+// console.log(hash.get("react"));
 
-hash.remove("woong");
-console.log(hash.get("woong"));
+// hash.remove("woong");
+// console.log(hash.get("woong"));
 
-console.clear();
+// console.clear();
 
-hash.print();
+// hash.print();

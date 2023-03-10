@@ -4,7 +4,7 @@
  */
 
 // Node 클래스는 연결리스트의 각 노드를 나타내며, 데이터와 다음 노드를 가리키는 링크를 가진다.
-class Node {
+export class Node {
   constructor(element) {
     this.element = element;
     this.next = null;
@@ -12,7 +12,7 @@ class Node {
 }
 
 // LinkedList 클래스는 실제 연결리스트를 구현하며, 각각의 노드를 링크를 통해 연결
-class LinkedList {
+export class LinkedList {
   constructor() {
     this.length = 0;
     this.head = null;
