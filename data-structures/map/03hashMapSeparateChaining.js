@@ -1,23 +1,12 @@
 /**
- * @desc : 체이닝
+ * @desc : 체이닝 (23.03.10)
  * 해시 충돌 해결법
  * 테이블의 인덱스별로 연결 리스트를  생성해 그 안에 원소를 저장하는 기법
  */
 
 import { LinkedList } from "../linkedList/01연결리스트.js";
 import HashTable from "./02hashMap.js";
-
-// 연결리스트 element값에 [key, value]로 들어가는 클래스
-class ValuePair {
-  constructor(key, value) {
-    this.key = key;
-    this.value = value;
-  }
-
-  toString() {
-    return "[" + this.key + " - " + this.value + "]";
-  }
-}
+import { ValuePair } from "./utils.js";
 
 class HashTableSeparateChaining extends HashTable {
   put(key, value) {
