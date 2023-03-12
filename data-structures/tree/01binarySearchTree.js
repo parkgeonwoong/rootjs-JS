@@ -20,6 +20,7 @@ class BinarySearchTree {
     this.root = null;
   }
 
+  // 1. [삽입]
   insert(key) {
     let newNode = new Node(key);
 
@@ -52,6 +53,51 @@ class BinarySearchTree {
       }
     }
   }
+
+  /**
+   * @트리순회
+   */
+  // [순회] 중위순회
+  // callback 함수에는 노드 방문 시 수행할 작업을 기술 (방문자 패턴)
+  inOrderTraverse(callback) {
+    this.inOrderTraverseNode(this.root, callback);
+  }
+
+  // 방문이 좌 → 중앙 → 우
+  inOrderTraverseNode(node, callback) {
+    if (node !== null) {
+      this.inOrderTraverseNode(node.left, callback);
+      callback(node.key);
+      this.inOrderTraverseNode(node.right, callback);
+    }
+  }
+
+  // [순회] 전위순회
+  preOrderTraverse(callback) {
+    this.preOrderTraverseNode(this.root, callback);
+  }
+
+  // 방문이 중앙 → 좌 → 우
+  preOrderTraverseNode(node, callback) {
+    if (node !== null) {
+      callback(node.key);
+      this.preOrderTraverseNode(node.left, callback);
+      this.preOrderTraverseNode(node.right, callback);
+    }
+  }
+
+  // [순회] 후위순회
+  postOrderTraverse(callback) {
+    this.postOrderTraverseNode(this.root, callback);
+  }
+  // 방문이 좌 → 우 → 중앙
+  postOrderTraverseNode(node, callback) {
+    if (node !== null) {
+      this.postOrderTraverseNode(node.left, callback);
+      this.postOrderTraverseNode(node.right, callback);
+      callback(node.key);
+    }
+  }
 }
 
 let tree = new BinarySearchTree();
@@ -69,5 +115,15 @@ tree.insert(14);
 tree.insert(20);
 tree.insert(18);
 tree.insert(25);
+tree.insert(6);
 
 console.log(tree);
+
+// 순회 출력
+function printNode(value) {
+  console.log(value);
+}
+
+tree.inOrderTraverse(printNode);
+tree.preOrderTraverse(printNode);
+tree.postOrderTraverse(printNode);
