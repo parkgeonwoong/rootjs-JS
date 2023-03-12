@@ -1,5 +1,5 @@
 /**
- * @desc : 이진탐색트리 클래스
+ * @desc : 이진탐색트리 클래스 (23.03.12)
  * 이진탐색트리의 자료구조가 내부적으로 어떻게 저장되는가?
  * - 이중연결리스트로 노드당 2개의 포인터 존재
  * - 각각 좌측, 우측 자식 노드를 가리킨다
@@ -111,7 +111,7 @@ class BinarySearchTree {
       while (node && node.left !== null) {
         node = node.left;
       }
-      return node.key;
+      return node; // node.key
     }
     return null;
   }
@@ -145,6 +145,51 @@ class BinarySearchTree {
       return this.searchNode(node.right, key);
     } else {
       return true;
+    }
+  }
+
+  // [삭제]
+  remove(key) {
+    this.root = this.removeNode(this.root, key);
+  }
+
+  removeNode(node, key) {
+    if (node === null) {
+      return null;
+    }
+    // key의 탐색부터
+    // 좌측
+    if (key < node.key) {
+      node.left = this.removeNode(node.left, key);
+      return node;
+    }
+    // 우측
+    else if (key > node.key) {
+      node.right = this.removeNode(node.right, key);
+      return node;
+    }
+    // 찾은 경우
+    else {
+      // 경우 #1 - 리프노드
+      if (node.left === null && node.right === null) {
+        node = null;
+        return node;
+      }
+
+      // 경우 #2 - 자식이 하나뿐인 노드
+      if (node.left === null) {
+        node = node.right; // 좌측이 null이지만 자식이 오른쪽에 있으므로 해당 노드를 건너뛰고 할아버지와 손주를 잡게한다
+        return node;
+      } else if (node.right === null) {
+        node = node.left;
+        return node;
+      }
+
+      // 경우 #3 - 자식이 둘인 노드
+      const aux = this.minNode(node.right);
+      node.key = aux.key;
+      node.right = this.removeNode(node.right, aux.key);
+      return node;
     }
   }
 }
@@ -182,3 +227,9 @@ console.clear();
 // 트리 검색
 console.log("max: ", tree.max());
 console.log(tree.search(8) ? "find" : "Not find");
+
+console.clear();
+
+console.log(tree);
+tree.remove(15);
+console.log(tree);
