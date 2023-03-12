@@ -98,6 +98,55 @@ class BinarySearchTree {
       callback(node.key);
     }
   }
+
+  /**
+   * @트리검색
+   */
+  min() {
+    return this.minNode(this.root);
+  }
+
+  minNode(node) {
+    if (node) {
+      while (node && node.left !== null) {
+        node = node.left;
+      }
+      return node.key;
+    }
+    return null;
+  }
+
+  max() {
+    return this.maxNode(this.root);
+  }
+
+  maxNode(node) {
+    if (node) {
+      while (node && node.right !== null) {
+        node = node.right;
+      }
+      return node.key;
+    }
+    return null;
+  }
+
+  search(key) {
+    return this.searchNode(this.root, key);
+  }
+
+  searchNode(node, key) {
+    if (node === null) {
+      return false;
+    }
+
+    if (key < node.key) {
+      return this.searchNode(node.left, key);
+    } else if (key > node.key) {
+      return this.searchNode(node.right, key);
+    } else {
+      return true;
+    }
+  }
 }
 
 let tree = new BinarySearchTree();
@@ -127,3 +176,9 @@ function printNode(value) {
 tree.inOrderTraverse(printNode);
 tree.preOrderTraverse(printNode);
 tree.postOrderTraverse(printNode);
+
+console.clear();
+
+// 트리 검색
+console.log("max: ", tree.max());
+console.log(tree.search(8) ? "find" : "Not find");

@@ -5,7 +5,7 @@
  */
 
 import { LinkedList } from "../linkedList/01연결리스트.js";
-import HashTable from "./02hashMap.js";
+import HashTable from "./02해시맵.js";
 import { ValuePair } from "./utils.js";
 
 class HashTableSeparateChaining extends HashTable {

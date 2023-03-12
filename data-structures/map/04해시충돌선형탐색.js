@@ -3,7 +3,7 @@
  * 새원소 추가 시 인데스가 이미 점유된 상태라면 인덱스+1을 찾아보고, 인덱스가 점유됐다면 인덱스+2를 찾아보는 식으로 충돌을 회피
  */
 
-import HashTable from "./02hashMap.js";
+import HashTable from "./02해시맵.js";
 import { ValuePair } from "./utils.js";
 
 class HashTableLinearProbing extends HashTable {
