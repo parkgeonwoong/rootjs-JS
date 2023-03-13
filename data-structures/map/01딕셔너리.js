@@ -4,7 +4,7 @@
  * - 배열 대신 객체(Object 인스턴스)에 원소를 보관
  */
 
-class Dictionary {
+export default class Dictionary {
   constructor() {
     this.items = {};
   }
