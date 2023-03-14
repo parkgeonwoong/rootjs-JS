@@ -1,10 +1,10 @@
 /**
- * @desc: 그래프 클래스
+ * @desc: 그래프 클래스 23.03.14
  */
 
 import Dictionary from "../map/01딕셔너리.js";
 
-class Graph {
+export class Graph {
   constructor() {
     this.vertices = []; // 정점
     this.adjList = new Dictionary(); // 인접리스트 → [키, 값]
@@ -36,10 +36,18 @@ class Graph {
     }
     return s;
   }
+
+  getVertices() {
+    return this.vertices;
+  }
+
+  getAdjList() {
+    return this.adjList;
+  }
 }
 
-const graph = new Graph();
-const Vertices = ["A", "B", "C", "D", "E", "F", "G", "H", "I"];
+export const graph = new Graph();
+export const Vertices = ["A", "B", "C", "D", "E", "F", "G", "H", "I"];
 for (let i = 0; i < Vertices.length; i++) {
   graph.addVertex(Vertices[i]);
 }
@@ -54,6 +62,8 @@ graph.addEdge("B", "E");
 graph.addEdge("B", "F");
 graph.addEdge("E", "I");
 
-console.log(graph.toString());
+// console.log(graph.toString());
 
-console.log(graph);
+// console.log(graph);
+
+console.clear();

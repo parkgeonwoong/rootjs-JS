@@ -2,7 +2,7 @@
  * @desc : 순수함수로 큐 만들기 23.03.06
  */
 
-function Queue() {
+export function Queue() {
   let items = [];
 
   this.enqueue = function (element) {
@@ -35,9 +35,9 @@ function Queue() {
 }
 
 const queue = new Queue();
-queue.enqueue(1);
-queue.enqueue(3);
-queue.enqueue(5);
+// queue.enqueue(1);
+// queue.enqueue(3);
+// queue.enqueue(5);
 
-queue.dequeue();
-queue.print();
+// queue.dequeue();
+// queue.print();
