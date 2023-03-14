@@ -64,11 +64,11 @@ export default class Dictionary {
 
 const dictionary = new Dictionary();
 
-dictionary.set("park", "hello");
-dictionary.set("geon", "world");
-dictionary.set("woong", "react");
+// dictionary.set("park", "hello");
+// dictionary.set("geon", "world");
+// dictionary.set("woong", "react");
 
-console.log(dictionary.getItems());
-console.log(dictionary.size());
-console.log(dictionary.has("woong"));
-console.log(dictionary.values());
+// console.log(dictionary.getItems());
+// console.log(dictionary.size());
+// console.log(dictionary.has("woong"));
+// console.log(dictionary.values());
