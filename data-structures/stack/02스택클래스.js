@@ -37,10 +37,10 @@ export default class Stack {
 }
 
 const stack = new Stack();
-stack.push(1);
-stack.push(5);
-stack.pop();
-stack.print();
-console.log(stack.size());
+// stack.push(1);
+// stack.push(5);
+// stack.pop();
+// stack.print();
+// console.log(stack.size());
 
 // console.clear();

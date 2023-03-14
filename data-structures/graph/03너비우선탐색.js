@@ -20,6 +20,7 @@
  */
 
 import { Queue } from "../queue/01큐함수.js";
+import Stack from "../stack/02스택클래스.js";
 import { Graph } from "./01그래프.js";
 
 const Colors = {
@@ -69,6 +70,47 @@ const printNode = (value) => {
   console.log("탐색한 정점 : ", value);
 };
 
+/**
+ * @desc : BFS로 최단 경로 찾기
+ */
+
+export const BFS = (graph, startVertex) => {
+  const vertices = graph.getVertices();
+  const adjList = graph.getAdjList();
+  const color = initialzeColor(vertices);
+  const queue = new Queue();
+  const distances = {};
+  const predecessors = {};
+
+  queue.enqueue(startVertex);
+
+  for (let i = 0; i < vertices.length; i++) {
+    distances[vertices[i]] = 0;
+    predecessors[vertices[i]] = null;
+  }
+
+  while (!queue.isEmpty()) {
+    const u = queue.dequeue();
+    const neighbors = adjList.get(u);
+    color[u] = Colors.GREY;
+
+    for (let i = 0; i < neighbors.length; i++) {
+      const w = neighbors[i];
+      if (color[w] === Colors.WHITE) {
+        color[w] = Colors.GREY;
+        distances[w] = distances[u] + 1;
+        predecessors[w] = u;
+        queue.enqueue(w);
+      }
+    }
+    color[u] = Colors.BLACK;
+  }
+  return {
+    distances,
+    predecessors,
+  };
+};
+
 const graph = new Graph();
 const Vertices = ["A", "B", "C", "D", "E", "F", "G", "H", "I"];
 for (let i = 0; i < Vertices.length; i++) {
@@ -86,3 +128,23 @@ graph.addEdge("B", "F");
 graph.addEdge("E", "I");
 
 breadthFirstSearch(graph, Vertices[0], printNode);
+
+// BFS 최단 거리 테스트
+const shortestPathA = BFS(graph, Vertices[0]);
+// console.log(shortestPathA);
+
+const fromVertex = Vertices[0];
+for (let i = 1; i < Vertices.length; i++) {
+  const toVertex = Vertices[i];
+  const path = new Stack();
+
+  for (let v = toVertex; v !== fromVertex; v = shortestPathA.predecessors[v]) {
+    path.push(v);
+  }
+  path.push(fromVertex);
+  let s = path.pop();
+  while (!path.isEmpty()) {
+    s += " - " + path.pop();
+  }
+  console.log(s);
+}
