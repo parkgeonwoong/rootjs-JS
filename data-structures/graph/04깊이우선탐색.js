@@ -57,6 +57,60 @@ function depthFirstSearchVisit(u, color, adjList, callback) {
 }
 
 /**
+ * @desc: 알고리즘 탐구 개선한 DFS
+ * u의 방문시간 : d[u]
+ * u의 탐색시간 : f[u]
+ * u의 선행자 : p[u]
+ */
+
+const DFS = (graph) => {
+  const vertices = graph.getVertices();
+  const adjList = graph.getAdjList();
+  const color = initializeColor(vertices);
+  const d = {};
+  const f = {};
+  const p = {};
+  const time = { count: 0 };
+
+  for (let i = 0; i < vertices.length; i++) {
+    d[vertices[i]] = 0;
+    f[vertices[i]] = 0;
+    p[vertices[i]] = null;
+  }
+
+  for (let i = 0; i < vertices.length; i++) {
+    if (color[vertices[i]] === Colors.WHITE) {
+      DFSVisit(vertices[i], color, d, f, p, time, adjList);
+    }
+  }
+
+  return {
+    discovery: d,
+    finished: f,
+    predecessors: p,
+  };
+};
+
+function DFSVisit(u, color, d, f, p, time, adjList) {
+  console.log("방문: ", u);
+  color[u] = Colors.GREY;
+  d[u] = ++time.count;
+  const neighbors = adjList.get(u);
+
+  for (let i = 0; i < neighbors.length; i++) {
+    const w = neighbors[i];
+
+    if (color[w] === Colors.WHITE) {
+      p[w] = u;
+      DFSVisit(w, color, d, f, p, time, adjList);
+    }
+  }
+  color[u] = Colors.BLACK;
+  f[u] = ++time.count;
+  console.log("탐색: ", u);
+}
+
+/**
  * @Test
  */
 
@@ -81,3 +135,4 @@ const printNode = (value) => {
 };
 
 depthFirstSearch(graph, printNode);
+DFS(graph);
