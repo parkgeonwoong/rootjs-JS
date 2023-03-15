@@ -3,7 +3,7 @@
  * 인접한 두 원소를 모두 비교하고 그 결과에 따라 두 원소의 위치를 서로 바꾼다
  */
 
-import { ArrayList, Compare, defaultCompare, swap } from "./util.js";
+import { ArrayList, Compare, defaultCompare, swap } from "../util.js";
 
 export function bubbleSort(array, compareFn = defaultCompare) {
   const { length } = array;

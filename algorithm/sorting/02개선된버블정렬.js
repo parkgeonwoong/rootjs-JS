@@ -4,7 +4,7 @@
  * - 안쪽 순회에서 바깥쪽 순회의 반복 횟수를 차감하면 불필요한 작업을 줄여보자
  */
 
-import { Compare, defaultCompare, swap } from "./util";
+import { Compare, defaultCompare, swap } from "..util.js";
 
 function modifiedBubbleSort(array, compareFn = defaultCompare) {
   const { length } = array;
