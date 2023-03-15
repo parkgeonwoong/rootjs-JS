@@ -12,6 +12,14 @@ export class ArrayList {
   }
 }
 
+export function createNonSortedArray(size) {
+  const array = new ArrayList();
+  for (let i = size; i > 0; i--) {
+    array.insert(i);
+  }
+  return array.array;
+}
+
 export const Compare = {
   LESS_THAN: -1,
   BIGGER_THAN: 1,
