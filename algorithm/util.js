@@ -1,3 +1,4 @@
+// 테스트를 위한 배열클래스 생성
 export class ArrayList {
   constructor() {
     this.array = [];
@@ -12,6 +13,7 @@ export class ArrayList {
   }
 }
 
+// 테스트 배열 [5, 4, 3, 2, 1]
 export function createNonSortedArray(size) {
   const array = new ArrayList();
   for (let i = size; i > 0; i--) {
@@ -20,6 +22,7 @@ export function createNonSortedArray(size) {
   return array.array;
 }
 
+// 비교를 위한 객체
 export const Compare = {
   LESS_THAN: -1,
   BIGGER_THAN: 1,
@@ -38,6 +41,7 @@ export function biggerEquals(a, b, compareFn) {
   return comp === Compare.BIGGER_THAN || comp === Compare.EQUALS;
 }
 
+// 비교 기본값
 export function defaultCompare(a, b) {
   if (a === b) {
     return Compare.EQUALS;
