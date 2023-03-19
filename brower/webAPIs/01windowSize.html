@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Window Size</title>
+    <style>
+      .tag {
+        /* display: inline-block; */
+        background-color: wheat;
+        padding: 20px;
+        max-width: 480px;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="tag">
+      <h3>Window.screen : <span></span></h3>
+      <h3>Window.outer : <span></span></h3>
+      <h3>Window.inner : <span></span></h3>
+      <h3>documentElement.clientWidth : <span></span></h3>
+    </div>
+
+    <script>
+      const spanArr = document.querySelectorAll("span");
+
+      function updateResize() {
+        //   Window.screen → 모니터 화면
+        spanArr[0].textContent = `${window.screen.width}, ${window.screen.height}`;
+
+        // Window.outer → 브라우저 화면
+        spanArr[1].textContent = `${window.outerWidth}, ${window.outerHeight}`;
+
+        // Window.inner → 브라우저 보이는 화면 (스크롤 포함)
+        spanArr[2].textContent = `${window.innerWidth}, ${window.innerHeight}`;
+
+        // document.documentElement.clientWidth → 화면에 보이는 브라우저만큼 화면
+        spanArr[3].textContent = `${document.documentElement.clientWidth}, ${document.documentElement.clientHeight}`;
+      }
+
+      // 화면 크기가 변경되었을 때는 JS 코드를 다시 실행해야 합니다.
+      // 이를 위해서는 화면 크기가 변경될 때마다 이벤트를 감지하여 JS 코드를 다시 실행하면 됩니다.
+      window.addEventListener("resize", updateResize);
+      updateResize();
+    </script>
+  </body>
+</html>
