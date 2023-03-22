@@ -45,6 +45,7 @@ boxes.forEach((box) => {
  * @desc : [추가] 버튼에 따라 스크롤 이동
  * window.scrollBy(X, Y) 는 현재 위치를 기준(상대위치)
  * window.scrollTo(X, Y) 는 왼쪽 상단을 기준(절대위치)
+ * Element.scrollIntoView() 호출한 요소로 이동
  */
 btn[0].addEventListener("click", function () {
   window.scrollBy({ top: 100, left: 100, behavior: "smooth" });
