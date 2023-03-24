@@ -39,3 +39,17 @@ request/response(HTML) → loading → scripting(DOM 생성, CSSOM 생성) → R
 
 그렇다면 layout 바뀌는 것이 성능에 최악이다. → layout > painting > composite
 (이에 따른 참고 https://www.lmame-geek.com/css-triggers/)
+
+<br>
+
+## DOM 요소 조작
+
+|           이름            |                설명                |
+| :-----------------------: | :--------------------------------: |
+| document.createElement()  |          새로운 요소 생성          |
+|  Element.setAttribute()   |             속성 추가              |
+|     Element.append()      |  요소의 마지막 자식으로 요소 추가  |
+|    Node.removeChild()     |       요소의 자식 요소 제거        |
+| Node.textContent = 'text' |      요소의 텍스트 내용 설정       |
+|    Node.insertBefore()    |     요소를 특정 요소 앞에 추가     |
+|     Element.innerHTML     | 전체적인 요소의 내용을 HTML로 설정 |
