@@ -44,7 +44,7 @@ header h3:hover {
   scale: 1.1;
 }
 
-main {
+.items {
   /* 한 레이아웃에서 스크롤 */
   overflow-y: auto;
   display: flex;
@@ -54,7 +54,7 @@ main {
   height: 65%;
 }
 
-.mainDiv {
+.item__row {
   display: flex;
   align-items: center;
   justify-content: space-between;
