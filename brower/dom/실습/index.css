@@ -45,11 +45,13 @@ header h3:hover {
 }
 
 main {
-  overflow-y: auto; /* 한 레이아웃에서 스크롤 */
+  /* 한 레이아웃에서 스크롤 */
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   margin: 20px 50px;
   font-size: 18px;
+  height: 65%;
 }
 
 .mainDiv {

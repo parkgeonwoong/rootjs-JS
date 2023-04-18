@@ -1,24 +1,26 @@
 const main = document.querySelector("main");
 const input = document.querySelector("input");
 
-// 생성
+/**
+ * @desc: input에 입력된 값을 받아서 DOM을 생성하는 함수
+ */
 const onInput = (event) => {
   if (event.target === "") {
     input.focus();
     return;
   }
-  // 추가한 것을 담은 객체 div
+
   const item = onCreate(event.target.value);
-
-  // main DOM에 집어넣기
   main.append(item);
+  item.scrollIntoView({ behavior: "smooth", block: "center" });
 
-  // input 초기화
   event.target.value = "";
   input.focus();
 };
 
-// DOM 생성 함수
+/**
+ * @desc: DOM을 생성하는 함수
+ */
 function onCreate(text) {
   const span = document.createElement("span");
   span.setAttribute("class", "context");
