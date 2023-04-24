@@ -1,20 +1,22 @@
 const items = document.querySelector(".items");
 const input = document.querySelector("input");
+const form = document.querySelector(".new-form");
 
 /**
  * @desc: input에 입력된 값을 받아서 DOM을 생성하는 함수
  */
-const onInput = (event) => {
-  if (event.target === "") {
+const onInput = () => {
+  const text = input.value;
+  if (text === "") {
     input.focus();
     return;
   }
 
-  const item = onCreate(event.target.value);
+  const item = onCreate(text);
   items.append(item);
   item.scrollIntoView({ behavior: "smooth", block: "center" });
 
-  event.target.value = "";
+  input.value = "";
   input.focus();
 };
 
@@ -42,11 +44,16 @@ function onCreate(text) {
   return itemRow;
 }
 
-input.addEventListener("change", onInput);
+// input.addEventListener("change", onInput);
+
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
+  onInput();
+});
 
 items.addEventListener("click", (event) => {
   const id = event.target.dataset.id;
-  if (id) {
+  if (id && event.target.tagName === "I") {
     const toBeDelete = document.querySelector(`.item__row[data-id="${id}"]`);
     toBeDelete.remove();
   }
