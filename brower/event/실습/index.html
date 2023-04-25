@@ -9,15 +9,27 @@
       src="https://kit.fontawesome.com/a6ce2efcb3.js"
       crossorigin="anonymous"
     ></script>
+    <script src="./index.js" defer></script>
     <title>Document</title>
   </head>
   <body>
+    <!-- 헤더: 시작, 스탑워치, 카운트 -->
     <header>
       <button class="start">
         <i class="fa-solid fa-play"></i>
       </button>
-      <div class="clock">00:00</div>
-      <div class="counter">0</div>
+      <div class="clock">0초</div>
+      <div class="counter">10</div>
     </header>
+
+    <!-- 모달 -->
+    <div class="modal-overlay">
+      <div class="modal-window">
+        <button class="retry">
+          <i class="fa-solid fa-rotate-left"></i>
+        </button>
+        <span class="modal-title">Hello</span>
+      </div>
+    </div>
   </body>
 </html>
