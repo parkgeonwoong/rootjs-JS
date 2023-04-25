@@ -1,0 +1,53 @@
+body {
+  background: url("./img/background.png");
+  background-size: cover;
+}
+
+/* Header 부분 */
+header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 20px auto;
+}
+
+.start {
+  margin: 20px;
+  padding: 20px 30px;
+  font-size: 20px;
+  border: none;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
+  background-color: #ffccd5;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.start:hover {
+  opacity: 0.7;
+}
+
+.clock {
+  padding: 20px;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
+  border-radius: 10px;
+  background-color: #ffccd5;
+  font-size: 25px;
+  font-weight: 500;
+}
+
+.counter {
+  margin-top: 20px;
+  padding: 20px;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
+  border-radius: 50%;
+  background-color: #ffccd5;
+  font-size: 30px;
+  font-weight: 600;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
