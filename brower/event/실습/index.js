@@ -4,10 +4,12 @@ const clock = document.querySelector(".clock");
 const modal = document.querySelector(".modal-overlay");
 const body = document.querySelector("body");
 const response = document.querySelector(".response");
+const counter = document.querySelector(".counter");
 
 let startFlag = true;
-let timeLimit = 3;
+let timeLimit = 10;
 let time;
+let cnt = 10;
 // 오디오: https://mjmjmj98.tistory.com/31
 let audioBg = new Audio("./sound/bg.mp3");
 let audioWin = new Audio("./sound/game_win.mp3");
@@ -31,6 +33,7 @@ function onStart() {
 
     startFlag = false;
     start.innerHTML = `<i class="fa-solid fa-stop"></i>`;
+    counter.innerHTML = `${cnt}`;
     audioBg.play();
     createObj();
   } else {
@@ -39,25 +42,34 @@ function onStart() {
     startFlag = true;
   }
 }
-console.log(
-  "높이: ",
-  window.outerHeight,
-  " 너비: ",
-  window.outerWidth,
-  "inner: ",
-  window.innerWidth
-);
+
 // 버그,당근 생성
 function createObj() {
   for (let i = 0; i < 10; i++) {
     const bugObj = document.createElement("img");
+    const carrotObj = document.createElement("img");
+
     bugObj.setAttribute("src", "./img/bug.png");
+    carrotObj.setAttribute("src", "./img/carrot.png");
+
+    bugObj.style.position = "absolute";
+    carrotObj.style.position = "absolute";
+
     bugObj.style.transform = `translate(${
-      Math.random() * (window.innerWidth / 2)
+      Math.random() * window.innerWidth
     }px, ${Math.random() * (window.innerHeight / 2)}px)`;
+    carrotObj.style.transform = `translate(${
+      Math.random() * window.innerWidth
+    }px, ${Math.random() * (window.innerHeight / 2)}px)`;
+
     bugObj.style.cursor = "pointer";
+    carrotObj.style.cursor = "pointer";
+
     bugObj.addEventListener("click", () => onModal(false));
+    carrotObj.addEventListener("click", (event) => onRemove(event));
+
     response.append(bugObj);
+    response.append(carrotObj);
   }
 }
 
@@ -69,13 +81,24 @@ function onModal(state) {
     modal.style.display = "flex";
     title.innerHTML = `You Win 🎉`;
     audioWin.play();
+    audioBg.pause();
   } else {
     modal.style.display = "flex";
     title.innerHTML = `You Lose 💩`;
   }
 }
 
+// 당근 클릭 시 삭제
+function onRemove(event) {
+  event.target.remove();
+  cnt--;
+  counter.innerHTML = `${cnt}`;
+
+  if (cnt === 0) {
+    onModal(true);
+    clearInterval(time);
+  }
+}
+
 start.addEventListener("click", onStart);
-retry.addEventListener("click", () => {
-  location.reload();
-});
+retry.addEventListener("click", () => location.reload());
