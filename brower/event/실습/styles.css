@@ -67,6 +67,7 @@ header {
   justify-content: center;
   align-items: center;
   background-color: rgba(0, 0, 0, 0.4);
+  z-index: 99;
 }
 
 .modal-window {
@@ -84,4 +85,9 @@ header {
   font-size: 32px;
   font-weight: 700;
   color: white;
+}
+
+/* 리스폰 */
+.response {
+  width: 100%;
 }

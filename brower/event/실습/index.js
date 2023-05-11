@@ -2,6 +2,8 @@ const start = document.querySelector(".start");
 const retry = document.querySelector(".retry");
 const clock = document.querySelector(".clock");
 const modal = document.querySelector(".modal-overlay");
+const body = document.querySelector("body");
+const response = document.querySelector(".response");
 
 let startFlag = true;
 let timeLimit = 3;
@@ -30,10 +32,32 @@ function onStart() {
     startFlag = false;
     start.innerHTML = `<i class="fa-solid fa-stop"></i>`;
     audioBg.play();
+    createObj();
   } else {
     clearInterval(time);
     start.innerHTML = `<i class="fa-solid fa-play"></i>`;
     startFlag = true;
+  }
+}
+console.log(
+  "높이: ",
+  window.outerHeight,
+  " 너비: ",
+  window.outerWidth,
+  "inner: ",
+  window.innerWidth
+);
+// 버그,당근 생성
+function createObj() {
+  for (let i = 0; i < 10; i++) {
+    const bugObj = document.createElement("img");
+    bugObj.setAttribute("src", "./img/bug.png");
+    bugObj.style.transform = `translate(${
+      Math.random() * (window.innerWidth / 2)
+    }px, ${Math.random() * (window.innerHeight / 2)}px)`;
+    bugObj.style.cursor = "pointer";
+    bugObj.addEventListener("click", () => onModal(false));
+    response.append(bugObj);
   }
 }
 
