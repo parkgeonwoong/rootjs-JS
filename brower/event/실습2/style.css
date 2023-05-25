@@ -1,0 +1,117 @@
+/* 
+*   차이점
+    1. :root로 css 변수를 지정해 쉽게 고칠 수 있는 기능. -> 자주 사용할만한 것
+    2. section.game__field 태그 덕분에 쉽게 위치를 잡을 수 있음.
+*/
+
+:root {
+  --game_width: 800px;
+  --game_height: 500px;
+  --game_button: 60px;
+  --game_score: 50px;
+  --game_field_margin: 40px;
+  --pop_width: 400px;
+  --pop_height: 140px;
+}
+
+body {
+  text-align: center;
+}
+
+button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.game {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  width: var(--game_width);
+  height: var(--game_height);
+  background: url(../실습/img/background.png) center/cover;
+  border-radius: 20px;
+}
+
+.game__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.game__button {
+  width: var(--game_button);
+  height: var(--game_button);
+  background-color: wheat;
+  border: 4px solid black;
+  font-size: 24px;
+  transition: transform 0.3s ease-in;
+}
+
+.game__button:hover {
+  transform: scale(1.1);
+}
+
+.game__timer {
+  width: 100px;
+  background-color: white;
+  text-align: center;
+  border: 4px solid black;
+  font-size: 32px;
+  margin-top: 8px;
+}
+
+.game__score {
+  width: var(--game_score);
+  height: var(--game_score);
+  text-align: center;
+  background-color: darksalmon;
+  color: white;
+  border: 3px solid black;
+  border-radius: 50%;
+  font-size: 46px;
+  margin-top: 8px;
+}
+
+.game__field {
+  width: 100%;
+  height: 100%;
+  margin-top: var(--game_field_margin);
+  opacity: 0.4;
+}
+
+/* Pop-up */
+
+.pop-up {
+  display: block;
+  width: var(--pop_width);
+  height: var(--pop_height);
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 20px;
+  color: white;
+  text-align: center;
+  margin: auto;
+  transform: translateY(-150%);
+}
+
+.pop-up--hide {
+  display: none;
+}
+
+.pop-up__refresh {
+  width: 60px;
+  height: 60px;
+  font-size: 24px;
+  background-color: wheat;
+  border: 2px solid black;
+  border-radius: 50%;
+  margin-bottom: 20px;
+}
+
+.pop-up__message {
+  display: block;
+  font-size: 32px;
+}
