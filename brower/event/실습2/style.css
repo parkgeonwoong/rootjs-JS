@@ -76,10 +76,10 @@ button {
 }
 
 .game__field {
+  position: relative;
   width: 100%;
   height: 100%;
   margin-top: var(--game_field_margin);
-  opacity: 0.4;
 }
 
 /* Pop-up */
