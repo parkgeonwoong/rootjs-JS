@@ -26,6 +26,12 @@ const PopUp = document.querySelector(".pop-up");
 const PopUpMessage = document.querySelector(".pop-up__message");
 const PopUpRefresh = document.querySelector(".pop-up__refresh");
 
+const carrotSound = new Audio("../실습/sound/carrot_pull.mp3");
+const bugSound = new Audio("../실습/sound/bug_pull.mp3");
+const alertSound = new Audio("../실습/sound/alert.wav");
+const bgSound = new Audio("../실습/sound/bg.mp3");
+const winSound = new Audio("../실습/sound/game_win.mp3");
+
 let started = false;
 let score = 0;
 let timer = undefined;
@@ -52,17 +58,23 @@ function startGame() {
   showStopBtn();
   showTimerAndScore();
   startGameTimer();
+  playSound(bgSound);
 }
 function stopGame() {
   started = false;
   stopGameTimer();
   hideGameBtn();
   showPopUpWithText("Replay?");
+  playSound(alertSound);
+  stopSound(bgSound);
 }
 
 function finishGame(win) {
   started = false;
   hideGameBtn();
+  win ? playSound(winSound) : playSound(bugSound);
+  stopSound(bgSound);
+  stopGameTimer();
   showPopUpWithText(win ? "YOU WIN" : "YOU LOSE");
 }
 
@@ -121,6 +133,7 @@ function hidePopUp() {
  * 게임 시작 및 객체 생성
  */
 function initGame() {
+  score = 0;
   field.innerHTML = "";
   gameScore.innerText = CARROT_COUNT;
   addItem("carrot", CARROT_COUNT, "../실습/img/carrot.png");
@@ -136,14 +149,23 @@ function onFieldClick(event) {
   if (target.matches(".carrot")) {
     target.remove();
     score++;
+    playSound(carrotSound);
     updateScoreBoard();
     if (CARROT_COUNT === score) {
       finishGame(true);
     }
   } else if (target.matches(".bug")) {
-    stopGameTimer();
     finishGame(false);
   }
+}
+
+function playSound(sound) {
+  sound.currentTime = 0;
+  sound.play();
+}
+
+function stopSound(sound) {
+  sound.pause();
 }
 
 function updateScoreBoard() {
