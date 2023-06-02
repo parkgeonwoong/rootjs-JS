@@ -6,6 +6,8 @@
  * 4. 기능별로 함수를 생성해서 호출하는 형식
  * 5. 아이콘을 바꾸는 방법 -> classList.add,remove로 활용
  * 6. 객체 생성시 중복 안되게 field.innerHTML = '' 로 표현
+ * 7. 각각의 객체에 이벤트를 넣어주는 것이 아닌 field에 이벤트위임을 해야함
+ * 8. event.target에서 target.matches로 조건
  */
 
 const CARROT_SIZE = 80;
@@ -28,31 +30,50 @@ let started = false;
 let score = 0;
 let timer = undefined;
 
+field.addEventListener("click", onFieldClick);
+
 gameBtn.addEventListener("click", () => {
   if (started) {
     stopGame();
   } else {
     startGame();
   }
-  started = !started;
+});
+
+PopUpRefresh.addEventListener("click", () => {
+  startGame();
+  hidePopUp();
+  showGameBtn();
 });
 
 function startGame() {
+  started = true;
   initGame();
   showStopBtn();
   showTimerAndScore();
   startGameTimer();
 }
 function stopGame() {
+  started = false;
   stopGameTimer();
   hideGameBtn();
   showPopUpWithText("Replay?");
 }
 
+function finishGame(win) {
+  started = false;
+  hideGameBtn();
+  showPopUpWithText(win ? "YOU WIN" : "YOU LOSE");
+}
+
 function showStopBtn() {
-  const icon = document.querySelector(".fa-play");
+  const icon = document.querySelector(".changeIcon");
   icon.classList.add("fa-stop");
   icon.classList.remove("fa-play");
+}
+
+function showGameBtn() {
+  gameBtn.style.visibility = "visible";
 }
 
 function hideGameBtn() {
@@ -70,6 +91,7 @@ function startGameTimer() {
   timer = setInterval(() => {
     if (remainingTimeSec <= 0) {
       clearInterval(timer);
+      finishGame(score === CARROT_COUNT);
       return;
     }
     updateTimerText(--remainingTimeSec);
@@ -91,12 +113,41 @@ function showPopUpWithText(text) {
   PopUp.classList.remove("pop-up--hide");
 }
 
-// 게임 시작 및 객체 생성
+function hidePopUp() {
+  PopUp.classList.add("pop-up--hide");
+}
+
+/**
+ * 게임 시작 및 객체 생성
+ */
 function initGame() {
   field.innerHTML = "";
   gameScore.innerText = CARROT_COUNT;
   addItem("carrot", CARROT_COUNT, "../실습/img/carrot.png");
   addItem("bug", BUG_COUNT, "../실습/img/bug.png");
+}
+
+function onFieldClick(event) {
+  if (!started) {
+    return;
+  }
+  const target = event.target;
+
+  if (target.matches(".carrot")) {
+    target.remove();
+    score++;
+    updateScoreBoard();
+    if (CARROT_COUNT === score) {
+      finishGame(true);
+    }
+  } else if (target.matches(".bug")) {
+    stopGameTimer();
+    finishGame(false);
+  }
+}
+
+function updateScoreBoard() {
+  gameScore.innerText = CARROT_COUNT - score;
 }
 
 function addItem(className, count, imgPath) {
@@ -110,6 +161,7 @@ function addItem(className, count, imgPath) {
     item.setAttribute("class", className);
     item.setAttribute("src", imgPath);
     item.style.position = "absolute";
+    item.style.cursor = "pointer";
     const x = randomNumber(x1, x2);
     const y = randomNumber(y1, y2);
     item.style.left = `${x}px`;
