@@ -20,6 +20,10 @@ const gameBtn = document.querySelector(".game__button");
 const gameTimer = document.querySelector(".game__timer");
 const gameScore = document.querySelector(".game__score");
 
+const PopUp = document.querySelector(".pop-up");
+const PopUpMessage = document.querySelector(".pop-up__message");
+const PopUpRefresh = document.querySelector(".pop-up__refresh");
+
 let started = false;
 let score = 0;
 let timer = undefined;
@@ -39,12 +43,20 @@ function startGame() {
   showTimerAndScore();
   startGameTimer();
 }
-function stopGame() {}
+function stopGame() {
+  stopGameTimer();
+  hideGameBtn();
+  showPopUpWithText("Replay?");
+}
 
 function showStopBtn() {
   const icon = document.querySelector(".fa-play");
   icon.classList.add("fa-stop");
   icon.classList.remove("fa-play");
+}
+
+function hideGameBtn() {
+  gameBtn.style.visibility = "hidden";
 }
 
 function showTimerAndScore() {
@@ -64,10 +76,19 @@ function startGameTimer() {
   }, 1000);
 }
 
+function stopGameTimer() {
+  clearInterval(timer);
+}
+
 function updateTimerText(time) {
   const minutes = Math.floor(time / 60);
   const seconds = time % 60;
   gameTimer.innerText = `${minutes}:${seconds}`;
+}
+
+function showPopUpWithText(text) {
+  PopUpMessage.innerText = text;
+  PopUp.classList.remove("pop-up--hide");
 }
 
 // 게임 시작 및 객체 생성
