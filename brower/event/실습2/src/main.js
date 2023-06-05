@@ -10,6 +10,8 @@
  * 8. event.target에서 target.matches로 조건
  */
 
+import PopUp from "./popup.js";
+
 const CARROT_SIZE = 80;
 const CARROT_COUNT = 5;
 const BUG_COUNT = 5;
@@ -22,10 +24,6 @@ const gameBtn = document.querySelector(".game__button");
 const gameTimer = document.querySelector(".game__timer");
 const gameScore = document.querySelector(".game__score");
 
-const PopUp = document.querySelector(".pop-up");
-const PopUpMessage = document.querySelector(".pop-up__message");
-const PopUpRefresh = document.querySelector(".pop-up__refresh");
-
 const carrotSound = new Audio("../실습/sound/carrot_pull.mp3");
 const bugSound = new Audio("../실습/sound/bug_pull.mp3");
 const alertSound = new Audio("../실습/sound/alert.wav");
@@ -36,6 +34,12 @@ let started = false;
 let score = 0;
 let timer = undefined;
 
+const gameFinishBanner = new PopUp();
+
+gameFinishBanner.setClickListener(() => {
+  startGame();
+});
+
 field.addEventListener("click", onFieldClick);
 
 gameBtn.addEventListener("click", () => {
@@ -44,12 +48,6 @@ gameBtn.addEventListener("click", () => {
   } else {
     startGame();
   }
-});
-
-PopUpRefresh.addEventListener("click", () => {
-  startGame();
-  hidePopUp();
-  showGameBtn();
 });
 
 function startGame() {
@@ -64,7 +62,7 @@ function stopGame() {
   started = false;
   stopGameTimer();
   hideGameBtn();
-  showPopUpWithText("Replay?");
+  gameFinishBanner.showWithText("Replay?");
   playSound(alertSound);
   stopSound(bgSound);
 }
@@ -75,16 +73,13 @@ function finishGame(win) {
   win ? playSound(winSound) : playSound(bugSound);
   stopSound(bgSound);
   stopGameTimer();
-  showPopUpWithText(win ? "YOU WIN" : "YOU LOSE");
+  gameFinishBanner.showWithText(win ? "YOU WIN" : "YOU LOSE");
 }
 
 function showStopBtn() {
   const icon = document.querySelector(".changeIcon");
   icon.classList.add("fa-stop");
   icon.classList.remove("fa-play");
-}
-
-function showGameBtn() {
   gameBtn.style.visibility = "visible";
 }
 
@@ -118,15 +113,6 @@ function updateTimerText(time) {
   const minutes = Math.floor(time / 60);
   const seconds = time % 60;
   gameTimer.innerText = `${minutes}:${seconds}`;
-}
-
-function showPopUpWithText(text) {
-  PopUpMessage.innerText = text;
-  PopUp.classList.remove("pop-up--hide");
-}
-
-function hidePopUp() {
-  PopUp.classList.add("pop-up--hide");
 }
 
 /**
