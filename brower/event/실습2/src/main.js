@@ -14,129 +14,38 @@
  * html을 보고 섹션별로 분할 필요성
  * 1. 팝업창 클래스로 분할
  * 2. 필드 클래스로 분할
+ * 3. 사운드 모듈 분리
+ * 4. 게임 클래스로 분할
  */
 
 import PopUp from "./popup.js";
-import Field from "./field.js";
-import * as sound from "./sound.js";
+import Game from "./game.js";
 
 const CARROT_COUNT = 5;
 const BUG_COUNT = 5;
 const GAME_DURATION_SEC = 5;
 
-const gameBtn = document.querySelector(".game__button");
-const gameTimer = document.querySelector(".game__timer");
-const gameScore = document.querySelector(".game__score");
-
-let started = false;
-let score = 0;
-let timer = undefined;
-
 const gameFinishBanner = new PopUp();
+
+const game = new Game(CARROT_COUNT, BUG_COUNT, GAME_DURATION_SEC);
+game.setGameStopListener((reason) => {
+  let message;
+  switch (reason) {
+    case "cancel":
+      message = "Replay?";
+      break;
+    case "win":
+      message = "YOU WIN";
+      break;
+    case "lose":
+      message = "YOU LOST";
+      break;
+    default:
+      throw new Error("not valid reason");
+  }
+  gameFinishBanner.showWithText(message);
+});
+
 gameFinishBanner.setClickListener(() => {
-  startGame();
+  game.start();
 });
-
-const gameField = new Field(CARROT_COUNT, BUG_COUNT);
-gameField.setClickListener(onItemClick);
-
-function onItemClick(item) {
-  if (!started) {
-    return;
-  }
-  if (item === "carrot") {
-    score++;
-    updateScoreBoard();
-    if (CARROT_COUNT === score) {
-      finishGame(true);
-    }
-  } else if (item === "bug") {
-    finishGame(false);
-  }
-}
-
-gameBtn.addEventListener("click", () => {
-  if (started) {
-    stopGame();
-  } else {
-    startGame();
-  }
-});
-
-function startGame() {
-  started = true;
-  initGame();
-  showStopBtn();
-  showTimerAndScore();
-  startGameTimer();
-  sound.playBackground();
-}
-function stopGame() {
-  started = false;
-  stopGameTimer();
-  hideGameBtn();
-  gameFinishBanner.showWithText("Replay?");
-  sound.playAlert();
-  sound.stopBackground();
-}
-
-function finishGame(win) {
-  started = false;
-  hideGameBtn();
-  win ? sound.playWin() : sound.playBug();
-  sound.stopBackground();
-  stopGameTimer();
-  gameFinishBanner.showWithText(win ? "YOU WIN" : "YOU LOSE");
-}
-
-function showStopBtn() {
-  const icon = document.querySelector(".changeIcon");
-  icon.classList.add("fa-stop");
-  icon.classList.remove("fa-play");
-  gameBtn.style.visibility = "visible";
-}
-
-function hideGameBtn() {
-  gameBtn.style.visibility = "hidden";
-}
-
-function showTimerAndScore() {
-  gameTimer.style.visibility = "visible";
-  gameScore.style.visibility = "visible";
-}
-
-function startGameTimer() {
-  let remainingTimeSec = GAME_DURATION_SEC;
-  updateTimerText(remainingTimeSec);
-  timer = setInterval(() => {
-    if (remainingTimeSec <= 0) {
-      clearInterval(timer);
-      finishGame(score === CARROT_COUNT);
-      return;
-    }
-    updateTimerText(--remainingTimeSec);
-  }, 1000);
-}
-
-function stopGameTimer() {
-  clearInterval(timer);
-}
-
-function updateTimerText(time) {
-  const minutes = Math.floor(time / 60);
-  const seconds = time % 60;
-  gameTimer.innerText = `${minutes}:${seconds}`;
-}
-
-/**
- * 게임 시작 및 객체 생성
- */
-function initGame() {
-  score = 0;
-  gameScore.innerText = CARROT_COUNT;
-  gameField.init();
-}
-
-function updateScoreBoard() {
-  gameScore.innerText = CARROT_COUNT - score;
-}
