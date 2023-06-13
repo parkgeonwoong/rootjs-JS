@@ -1,8 +1,14 @@
 import Field from "./field.js";
 import * as sound from "./sound.js";
 
+export const Reason = Object.freeze({
+  win: "win",
+  lose: "lose",
+  cancel: "cancel",
+});
+
 // Build pattern
-export default class GameBuilder {
+export class GameBuilder {
   WithGameDuration(duration) {
     this.gameDuration = duration;
     return this;
@@ -39,7 +45,7 @@ class Game {
     this.gameBtn = document.querySelector(".game__button");
     this.gameBtn.addEventListener("click", () => {
       if (this.started) {
-        this.stop();
+        this.stop(Reason.cancel);
       } else {
         this.start();
       }
@@ -66,22 +72,13 @@ class Game {
     sound.playBackground();
   }
 
-  stop() {
+  // ❓함수안 중복 어떻게 고칠까? -> 매개변수로 구별
+  stop(reason) {
     this.started = false;
     this.stopGameTimer();
     this.hideGameBtn();
-    sound.playAlert();
     sound.stopBackground();
-    this.onGameStop && this.onGameStop("cancel");
-  }
-
-  finish(win) {
-    this.started = false;
-    this.hideGameBtn();
-    win ? sound.playWin() : sound.playBug();
-    this.stopGameTimer();
-    sound.stopBackground();
-    this.onGameStop && this.onGameStop(win ? "win" : "lose");
+    this.onGameStop && this.onGameStop(reason);
   }
 
   showStopBtn() {
@@ -106,7 +103,7 @@ class Game {
     this.timer = setInterval(() => {
       if (remainingTimeSec <= 0) {
         clearInterval(this.timer);
-        this.finish(this.score === this.carrotCount);
+        this.stop(this.score === this.carrotCount ? Reason.win : Reason.lose);
         return;
       }
       this.updateTimerText(--remainingTimeSec);
@@ -144,10 +141,10 @@ class Game {
       this.score++;
       this.updateScoreBoard();
       if (this.carrotCount === this.score) {
-        this.finish(true);
+        this.stop(Reason.win);
       }
     } else if (item === "bug") {
-      this.finish(false);
+      this.stop(Reason.lose);
     }
   }
 }
