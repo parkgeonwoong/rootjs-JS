@@ -19,15 +19,17 @@
  */
 
 import PopUp from "./popup.js";
-import Game from "./game.js";
-
-const CARROT_COUNT = 5;
-const BUG_COUNT = 5;
-const GAME_DURATION_SEC = 5;
+import GameBuilder from "./game.js";
 
 const gameFinishBanner = new PopUp();
 
-const game = new Game(CARROT_COUNT, BUG_COUNT, GAME_DURATION_SEC);
+// 메서드 체이닝 (return this → 현재의 GameBuilder 객체를 반환하여, 다른 메서드를 연속적으로 호출)
+const game = new GameBuilder()
+  .WithGameDuration(5)
+  .WithCarrotCount(5)
+  .WithBugCount(5)
+  .build();
+
 game.setGameStopListener((reason) => {
   let message;
   switch (reason) {
