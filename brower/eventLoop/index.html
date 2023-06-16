@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    hr {
+      margin: 20px 0px;
+    }
+
+    .btn1__div {
+      width: 100px;
+      height: 100px;
+      background-color: blueviolet;
+    }
+  </style>
+  <body>
+    <div>왜 500px로 가는가?</div>
+    <button class="btn1">Click me</button>
+    <div class="btn1__div"></div>
+
+    <hr />
+
+    <div>Call Stack이 끝나지 않는다면?</div>
+    <button class="btn2">While (true)</button>
+
+    <hr />
+
+    <div>Task Queue가 끝나지 않는다면?</div>
+    <button class="btn3">Continue setTimeout</button>
+    <script>
+      const btn1 = document.querySelector(".btn1");
+      const div1 = document.querySelector(".btn1__div");
+      btn1.addEventListener("click", () => {
+        div1.style.transition = `transform 1s ease-in`;
+        div1.style.transform = "translateX(800px)";
+        div1.style.transform = "translateX(500px)";
+        // Task Queue에 콜백함수가 들어왔다가 eventLoop를 통해 CallStack으로 가서 처리를 한 후에 event Loop가 Render 큐를 처리하고
+        // 브라우저에서 처리된 결과를 보여준다.
+      });
+
+      const btn2 = document.querySelector(".btn2");
+      btn2.addEventListener("click", () => {
+        while (true) {
+          // repeat
+          // 콜스택에 이처럼 오래되면 화면반응을 못보여줌
+        }
+      });
+
+      // 오로지 한가지씩 처리함!
+      const btn3 = document.querySelector(".btn3");
+      const handleClick = () => {
+        console.log("handleClick");
+        setTimeout(() => {
+          console.log("setTimeout");
+          handleClick();
+        }, 0);
+      };
+      btn3.addEventListener("click", () => {
+        handleClick();
+      });
+    </script>
+  </body>
+</html>
