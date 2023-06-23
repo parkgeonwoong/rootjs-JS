@@ -18,22 +18,22 @@ class Employee {
 }
 
 class FullTimeEmployee extends Employee {
-  static PAY = 10000;
+  static #PAY = 10000;
   constructor(name, department, hoursPerMonth) {
-    super(name, department, hoursPerMonth, FullTimeEmployee.PAY);
+    super(name, department, hoursPerMonth, FullTimeEmployee.#PAY);
   }
 }
 
 class PartTImeEmployee extends Employee {
-  static Pay = 8000;
+  static #Pay = 8000;
   constructor(name, department, hoursPerMonth) {
-    super(name, department, hoursPerMonth, PartTImeEmployee.Pay);
+    super(name, department, hoursPerMonth, PartTImeEmployee.#Pay);
   }
 }
 
 const i = new FullTimeEmployee("park", "Engineer", 12);
-console.log(i);
-i.calculate();
-
 const j = new PartTImeEmployee("bob", "Engineer", 10);
+i.calculate();
 j.calculate();
+
+console.log(i);
