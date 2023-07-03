@@ -1,12 +1,18 @@
-const key1 = Symbol("key");
-const key2 = Symbol("key");
-console.log(key1 === key2); // false
+function fryEgg(egg) {
+  return Promise.resolve(`${egg} -> 프라이`);
+}
 
-// 동일한 이름으로 하나의 키를 사용하고 싶다면 (전역 심볼 레지스트리)
-const key3 = Symbol.for("key");
-const key4 = Symbol.for("key");
-console.log(key3 === key4); // true
+function fetchEgg(chicken) {
+  return Promise.resolve(`${chicken} => 달걀`);
+}
 
-// 글로벌 키에 만든것만 접근할 수 있다.
-console.log(Symbol.keyFor(key3)); // key
-console.log(Symbol.keyFor(key1)); // undefined
+function getChicken() {
+  return Promise.reject(new Error("No Chicken"));
+  return Promise.resolve("사료 -> 치킨");
+}
+
+getChicken()
+  .catch(() => "디폴트 치킨")
+  .then((chicken) => fetchEgg(chicken))
+  .then((egg) => fryEgg(egg))
+  .then((fry) => console.log(fry));
