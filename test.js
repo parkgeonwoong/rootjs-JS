@@ -11,8 +11,22 @@ function getChicken() {
   return Promise.resolve("사료 -> 치킨");
 }
 
-getChicken()
-  .catch(() => "디폴트 치킨")
-  .then((chicken) => fetchEgg(chicken))
-  .then((egg) => fryEgg(egg))
-  .then((fry) => console.log(fry));
+// getChicken()
+//   .catch(() => "디폴트 치킨")
+//   .then((chicken) => fetchEgg(chicken))
+//   .then((egg) => fryEgg(egg))
+//   .then((fry) => console.log(fry));
+
+async function getAnswer() {
+  let chicken;
+  try {
+    chicken = await getChicken();
+  } catch (error) {
+    console.log(error);
+    chicken = "디폴트 치킨";
+  }
+  const egg = await fetchEgg(chicken);
+  const fry = await fryEgg(egg);
+  return fry;
+}
+getAnswer().then(console.log);
