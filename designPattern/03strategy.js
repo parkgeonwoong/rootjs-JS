@@ -1,7 +1,12 @@
+/**
+ * [전략패턴]
+ * - 객체의 행위를 바꾸고 싶은 경우 직접 수정하지 않고 '캡슐화한 알고리즘'을 컨텍스트 안에서 바꿔주면서 상호 교체가 가능하게 만듬
+ */
+
 // JumpStrategy 인터페이스
 class JumpStrategy {
   jump() {
-    throw new Error("This method must be implemented by subclasses.");
+    throw new Error("이 메서드는 하위 클래스에 의해 구현되어야 합니다.");
   }
 }
 
