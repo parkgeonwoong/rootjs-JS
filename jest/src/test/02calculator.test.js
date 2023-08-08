@@ -30,6 +30,14 @@ describe("Calculator", () => {
     expect(cal.value).toBe(5);
   });
 
+  // 에러가 뜨는것을 산정하고 expect(() => 콜백으로 던짐)
+  it("add should throw error", () => {
+    expect(() => {
+      cal.add(105);
+    }).toThrow("Value can not be greater than 100");
+    // 인자로는 에러 메시지의 일부만 일치시키는 것이 아닌, 정확한 에러 메시지를 넣어주어야 한다
+  });
+
   it("subtract", () => {
     cal.set(5);
     cal.subtract(3);
