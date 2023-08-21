@@ -19,6 +19,7 @@ describe("ProductService", () => {
   ]);
 
   // jest.mock과 jest.fn 연결
+  // mockImplementation메서드는 다른 모듈에서 생성된 모의 함수의 기본 구현을 정의해야 할 때 사용
   ProductClient.mockImplementation(() => {
     return {
       fetchItems: fetchItems,
