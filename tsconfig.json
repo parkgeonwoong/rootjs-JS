@@ -5,5 +5,8 @@
     // "outDir": "./js",
     // "noImplicitAny": true,
     "strictNullChecks": true
+  },
+  "ts-node": {
+    "esm": true
   }
 }
