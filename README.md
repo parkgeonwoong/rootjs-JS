@@ -18,15 +18,16 @@
 
 |   파일 이름    |              내용              |
 | :------------: | :----------------------------: |
-|      core      |       부족했던 문법 공부       |
-| data-structure |         자료구조 구현          |
 |   algorithm    |         알고리즘 구현          |
 |    browser     | 브라우저, 이벤트 알고리즘 구현 |
+|      core      |       부족했던 문법 공부       |
+| data-structure |         자료구조 구현          |
 | design-pattern |        디자인 패턴 공부        |
 |      jest      |        테스트 코드 공부        |
+|   typescript   |       타입스크립트 공부        |
 
 - JS로 React, SPA 구현
-- Test, 리팩토링 공부
+- 리팩토링 공부
 - JS 도구들 사용
 
 <br>
