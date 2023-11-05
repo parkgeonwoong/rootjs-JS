@@ -27,19 +27,15 @@ addEventListener("load", () => {
     // ✅성능개선
     vertical.style.transform = `translateX(${x}px)`;
     horizontal.style.transform = `translateY(${y}px)`;
-    target.style.transform = `translate(${x - targetHalfWidth}px, ${
-      y - targetHalfHeight
-    }px)`;
+    target.style.transform = `translate(${x - targetHalfWidth}px, ${y - targetHalfHeight}px)`;
     tag.style.transform = `translate(${x + 20}px, ${y + 20}px)`;
     tag.innerHTML = `${x}px, ${y}px`;
 
-    /* 
-  vertical.style.left = `${x}px`;
-  horizontal.style.top = `${y}px`;
-  target.style.left = `${x}px`;
-  target.style.top = `${y}px`;
-  tag.style.left = `${x}px`;
-  tag.style.top = `${y}px`;
-   */
+    // vertical.style.left = `${x}px`;
+    // horizontal.style.top = `${y}px`;
+    // target.style.left = `${x}px`;
+    // target.style.top = `${y}px`;
+    // tag.style.left = `${x}px`;
+    // tag.style.top = `${y}px`;
   });
 });
