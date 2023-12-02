@@ -13,11 +13,12 @@
     private static BEANS_GRAMM_PER_SHOT = 7;
     private coffeeBeans: number = 0;
 
-    public constructor(coffeeBeans: number) {
+    public constructor(
+      coffeeBeans: number,
+      private milk: MilkFrother,
+      private sugar: SugarProvider
+    ) {
       this.coffeeBeans = coffeeBeans;
-    }
-    static makeMachine(coffeeBeans: number): CoffeeMachine {
-      return new CoffeeMachine(coffeeBeans);
     }
 
     fillCoffeeBeans(beans: number) {
@@ -49,12 +50,22 @@
     makeCoffee(shots: number): CoffeeCup {
       this.grindBeans(shots);
       this.preheat();
-      return this.extract(shots);
+      const coffee = this.extract(shots);
+      const sugarAdded = this.sugar.addSugar(coffee);
+      return this.milk.makeMilk(sugarAdded);
     }
   }
 
-  //   FIXME: coupling problem
-  class cheapMilkSteamer {
+  interface MilkFrother {
+    makeMilk(cup: CoffeeCup): CoffeeCup;
+  }
+
+  interface SugarProvider {
+    addSugar(cup: CoffeeCup): CoffeeCup;
+  }
+
+  // Milk
+  class cheapMilkSteamer implements MilkFrother {
     private steamMilk() {
       console.log("우유 스팀 중...");
     }
@@ -64,8 +75,35 @@
       return { ...cup, hasMilk: true };
     }
   }
+  class fancyMilkSteamer implements MilkFrother {
+    private steamMilk() {
+      console.log("고급 우유 스팀 중...");
+    }
 
-  class candySugarMixer {
+    makeMilk(cup: CoffeeCup): CoffeeCup {
+      this.steamMilk();
+      return { ...cup, hasMilk: true };
+    }
+  }
+  class coldMilkSteamer implements MilkFrother {
+    private steamMilk() {
+      console.log("고급 우유 스팀 중...");
+    }
+
+    makeMilk(cup: CoffeeCup): CoffeeCup {
+      this.steamMilk();
+      return { ...cup, hasMilk: true };
+    }
+  }
+
+  class NoMilk implements MilkFrother {
+    makeMilk(cup: CoffeeCup): CoffeeCup {
+      return cup;
+    }
+  }
+
+  // Sugar
+  class candySugarMixer implements SugarProvider {
     private getSugar() {
       console.log("설탕을 가져옵니다.");
       return true;
@@ -76,52 +114,39 @@
       return { ...cup, hasSugar: sugar };
     }
   }
-
-  class CaffeLatteMachine extends CoffeeMachine {
-    constructor(
-      beans: number,
-      public readonly serialNumber: string,
-      private milkFrother: cheapMilkSteamer
-    ) {
-      super(beans);
+  class SugarMixer implements SugarProvider {
+    private getSugar() {
+      console.log("진짜 설탕을 가져옵니다.");
+      return true;
     }
 
-    makeCoffee(shots: number): CoffeeCup {
-      const coffee = super.makeCoffee(shots);
-      return this.milkFrother.makeMilk(coffee);
+    addSugar(cup: CoffeeCup): CoffeeCup {
+      const sugar = this.getSugar();
+      return { ...cup, hasSugar: sugar };
     }
   }
 
-  class SweetCoffeeMaker extends CoffeeMachine {
-    constructor(private beans: number, private sugar: candySugarMixer) {
-      super(beans);
-    }
-
-    makeCoffee(shots: number): CoffeeCup {
-      const coffee = super.makeCoffee(shots);
-      return this.sugar.addSugar(coffee);
+  class NoSugar implements SugarProvider {
+    addSugar(cup: CoffeeCup): CoffeeCup {
+      return cup;
     }
   }
 
-  class SweetCaffeLatteMachine extends CoffeeMachine {
-    constructor(
-      private beans: number,
-      private milk: cheapMilkSteamer,
-      private sugar: candySugarMixer
-    ) {
-      super(beans);
-    }
-
-    makeCoffee(shots: number): CoffeeCup {
-      const coffee = super.makeCoffee(shots);
-      const sugarAdded = this.sugar.addSugar(coffee);
-      return this.milk.makeMilk(sugarAdded);
-    }
-  }
-
+  // Milk
   const cheapMilkMaker = new cheapMilkSteamer();
+  const fancyMilkMaker = new fancyMilkSteamer();
+  const coldMilkMaker = new coldMilkSteamer();
+  const noMilk = new NoMilk();
+
+  // Sugar
   const candySugar = new candySugarMixer();
-  const sweetCandyMachine = new SweetCoffeeMaker(12, candySugar);
-  const latteMachine = new CaffeLatteMachine(12, "SSSS", cheapMilkMaker);
-  const sweetLatteMachine = new SweetCaffeLatteMachine(12, cheapMilkMaker, candySugar);
+  const sugar = new SugarMixer();
+  const noSugar = new NoSugar();
+
+  const sweetCandyMachine = new CoffeeMachine(12, noMilk, candySugar);
+  const sweetMachine = new CoffeeMachine(12, noMilk, sugar);
+
+  const latteMachine = new CoffeeMachine(12, cheapMilkMaker, noSugar);
+  const coldLatteMachine = new CoffeeMachine(12, coldMilkMaker, noSugar);
+  const sweetLatteMachine = new CoffeeMachine(12, cheapMilkMaker, candySugar);
 }
