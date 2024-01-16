@@ -40,8 +40,8 @@
 
 ## 📌 프로젝트
 
-| 프로젝트 이름  |    핵심 기능     |              링크              |                                  사진                                  |
-| :------------: | :--------------: | :----------------------------: | :--------------------------------------------------------------------: |
-|    쇼핑목록    |  `이벤트 위임`   |   [dom](./brower/dom/실습/)    | <img src="./assets/1.event_delegation.png" width="140" height="150" /> |
-|    좌표찾기    | `좌표(Web APIs)` |  [webAPIs](./brower/webAPIs/)  |    <img src="./assets/2.coordinate.png" width="200" height="120" />    |
-| 당근 찾기 게임 |     `Event`      | [event](./brower/event/실습2/) |      <img src="./assets/3.event.png" width="200" height="110" />       |
+| 프로젝트 이름  |    핵심 기능     |               링크                |                                  사진                                  |
+| :------------: | :--------------: | :-------------------------------: | :--------------------------------------------------------------------: |
+|    쇼핑목록    |  `이벤트 위임`   |     [dom](./brower/dom/실습/)     | <img src="./assets/1.event_delegation.png" width="140" height="150" /> |
+|    좌표찾기    | `좌표(Web APIs)` | [webAPIs](./brower/webAPIs/실습/) |    <img src="./assets/2.coordinate.png" width="200" height="120" />    |
+| 당근 찾기 게임 |     `Event`      |  [event](./brower/event/실습2/)   |      <img src="./assets/3.event.png" width="200" height="110" />       |
