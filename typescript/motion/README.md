@@ -33,6 +33,11 @@
 
 ## 🚀 기능 요구 사항
 
+#### 초기세팅
+
+- [ ] index.html 연결
+- [ ] reset style 적용
+
 #### UI
 
 - [ ] Header, document, footer 구조
