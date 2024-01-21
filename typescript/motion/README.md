@@ -35,13 +35,15 @@
 
 #### 초기세팅
 
-- [ ] index.html 연결
-- [ ] reset style 적용
+- [x] index.html 연결
+- [x] reset style 적용
+- [x] TS → JS 설정 (dist 폴더에 컴파일)
 
 #### UI
 
-- [ ] Header, document, footer 구조
-- [ ] Header에는 타이틀, 버튼 (이미지 등록, 비디오, 노트, 할일)
+- [x] Header, document, footer 구조
+- [x] Header에는 타이틀, 버튼 (이미지 , 비디오, 노트, 할일 등록버튼)
+- [x] 레이아웃 스타일링
 - [ ] document는 section 단위로 동적으로 생성
 
 #### 이미지 등록 기능
