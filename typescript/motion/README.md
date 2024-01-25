@@ -90,3 +90,57 @@
 
 - [ ] 드로그앤 드롭 기능 구현한다.
 - [ ] 삭제 기능 구현한다.
+
+---
+
+## ✅ 정리
+
+- `App`: 어플리케이션 전체를 가지고 있는 제일 큰 컨테이너 클래스
+- `PageComponent`: 사용자가 추가하는 문서를 담을수 있는 페이지 컨테이너 컴포넌트 클래스
+- `ImageComponent`: 사용자가 추가할 수 있는 문서중 하나의 타입으로, 이미지 노트
+
+<br>
+
+> 컴포넌트라면 기본적으로 가지고 있을수 있는 속성과 행동들이 중복적으로 담겨져 있다.
+
+1.  문자열 태그로 부터 HTMLElement를 동적으로 생성함 element
+
+2.  자기 자신을 다른 부모 컨테이너에추가 할 수 있는 attachTo
+
+이 중복되는 속성과 행동들을 컴포넌트의 공통적인 클래스 `BaseComponent`
+
+<br>
+
+```mermaid
+classDiagram
+  class Component {
+    <<interface>>
+    + attachTo(parent: HTMLElement, position?: InsertPosition): void
+  }
+
+  class App {
+    - page: PageComponent
+    + constructor(appRoot: HTMLElement)
+  }
+
+  class BaseComponent {
+    - element: T
+    + constructor(htmlString: string)
+    + attachTo(parent: HTMLElement, position?: InsertPosition): void
+  }
+
+  class PageComponent {
+    + constructor()
+  }
+
+  class ImageComponent {
+    - title: string
+    - url: string
+    + constructor(title: string, url: string)
+  }
+
+  Component <|.. BaseComponent
+  BaseComponent <|-- PageComponent
+  BaseComponent <|-- ImageComponent
+
+```
