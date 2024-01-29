@@ -5,12 +5,19 @@ export class VideoComponent extends BaseComponent {
                 <div class="video__player"><iframe class="video__iframe"></iframe>
                 <h3 class="video__title"></h3>
                 </div>
-                </section>`);
+            </section>`);
         const iframe = this.element.querySelector('.video__iframe');
-        console.log(url);
-        iframe.src =
-            'https://www.youtube.com/embed/9MPzEwZrRqo?list=PLXvgR_grOs1BFH-TuqFsfHqbh-gpMbFoy';
+        iframe.src = this.convertToEmbeddedURL(url);
         const titleElement = this.element.querySelector('.video__title');
         titleElement.textContent = title;
+    }
+    convertToEmbeddedURL(url) {
+        const regExp = /^(?:https?:\/\/)?(?:www\.)?(?:(?:youtube.com\/(?:(?:watch\?v=)|(?:embed\/))([a-zA-Z0-9(-|_)]{11}))|(?:youtu.be\/([a-zA-Z0-9(-|_)]{11})))/;
+        const match = url.match(regExp);
+        const videoId = match ? match[1] || match[2] : undefined;
+        if (videoId) {
+            return `https://www.youtube.com/embed/${videoId}`;
+        }
+        return url;
     }
 }
