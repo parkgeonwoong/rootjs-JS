@@ -56,6 +56,7 @@
 
 - [x] page 컴포넌트를 생성한다. `HTMLElement`를 생성하고 필요한 API를 구현한다.
 - [x] app 클래스에 연결한다.
+- [x] Item을 담는 page 컨테이너 컴포넌트를 생성한다.
 
 #### page 컴포넌트 안의 Item 컴포넌트 구현 기능
 
@@ -145,8 +146,30 @@ classDiagram
     + constructor(title: string, url: string)
   }
 
+  class NoteComponent {
+    - title: string
+    - body: string
+    + constructor(title: string, body: string)
+  }
+
+  class TodoComponent {
+    - title: string
+    - body: string
+    + constructor(title: string, body: string)
+  }
+
+  class VideoComponent {
+    - title: string
+    - url: string
+    + constructor(title: string, url: string)
+    + convertToEmbeddedURL(url: string): string
+  }
+
   Component <|.. BaseComponent
   BaseComponent <|-- PageComponent
   BaseComponent <|-- ImageComponent
+  BaseComponent <|-- NoteComponent
+  BaseComponent <|-- TodoComponent
+  BaseComponent <|-- VideoComponent
 
 ```
