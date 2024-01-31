@@ -7,4 +7,10 @@ export class BaseComponent {
     attachTo(parent, position = 'afterbegin') {
         parent.insertAdjacentElement(position, this.element);
     }
+    removeFrom(parent) {
+        if (parent !== this.element.parentElement) {
+            throw new Error('부모 요소가 다릅니다.');
+        }
+        parent.removeChild(this.element);
+    }
 }
