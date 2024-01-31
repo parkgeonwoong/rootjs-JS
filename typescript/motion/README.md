@@ -118,6 +118,18 @@
 
 <br>
 
+##### 왜 PageItemCoponent가 필요할까?
+
+- 각각의 컴포넌트들 안에 boolean과 같은 것을 인자로 전달해서 if-else와 같은 번잡한 로직을 통해서 어떨때는 닫힘 버튼을 보여주고 어떨떄는 보여주지 않고를 작성해야함
+- 그래서 실제의 보여지는 컨텐츠와 (Note, Image, Video. Todo..) 그리고 그것을 감싸서 꾸며주는 (닫힘 버튼이 추가된) `PageItemComponent` 같은 클래스를 만듬
+
+##### Composable 인터페이스는 왜 필요해요?
+
+- 커플링 (coupling)을 낮추기 위해서
+  클래스들 간에 서로 지나치게 밀접하게 연관되어져 있으면 (커플링이 심하게 되어 있으면) 유지보수성, 확정성이 떨어진다
+
+<br>
+
 ```mermaid
 classDiagram
   class Component {
@@ -136,8 +148,19 @@ classDiagram
     + attachTo(parent: HTMLElement, position?: InsertPosition): void
   }
 
+  class Composable {
+    <<interface>>
+    + addChild(child: Component): void
+  }
+
   class PageComponent {
     + constructor()
+    + addChild(section: Component): void
+  }
+
+  class PageItemComponent {
+    + constructor()
+    + addChild(child: Component): void
   }
 
   class ImageComponent {
@@ -166,10 +189,14 @@ classDiagram
   }
 
   Component <|.. BaseComponent
-  BaseComponent <|-- PageComponent
   BaseComponent <|-- ImageComponent
   BaseComponent <|-- NoteComponent
   BaseComponent <|-- TodoComponent
   BaseComponent <|-- VideoComponent
+  BaseComponent <|-- PageComponent
+  BaseComponent <|-- PageItemComponent
+
+  Composable <|.. PageComponent
+  Composable <|.. PageItemComponent
 
 ```
