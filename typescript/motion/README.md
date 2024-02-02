@@ -131,6 +131,14 @@
 - 커플링 (coupling)을 낮추기 위해서
   클래스들 간에 서로 지나치게 밀접하게 연관되어져 있으면 (커플링이 심하게 되어 있으면) 유지보수성, 확정성이 떨어진다
 
+##### 인터페이스로 정의해서 클래스간에 인터페이스를 통해서 대화하는 것
+
+- 나중에 클래스 관계가 복잡해질때, 서로간의 자세한 사항을, 클래스간에 서로의 이름을 알고 있는것은 커플링이다
+- 클래스들 간에 서로 지나치게 밀접하게 연관되어져 있으면 (커플링이 심하게 되어 있으면) 유지보수성, 확정성이 떨어진다
+- 그래서 이렇게 클래스에서 주된 규격 사항들을 인터페이스로 정의해 놓고, 클래스에서 그 인터페이스의 규격을 따라 가도록 구현해 놓고,
+  사용하는곳에서 (다른 클래스 안에서 이 클래스를 사용하거나, 인자로 전달하거나 등등) 클래스 이름의 타입이 아니라,
+  인터페이스 이름의 타입으로 지정해 두면! 다음에 다른 구현사항이 생기면 쉽게 다른 클래스로 변환이 가능.
+
 <br>
 
 ```mermaid
@@ -191,7 +199,14 @@ classDiagram
     + convertToEmbeddedURL(url: string): string
   }
 
+  class SectionContainer {
+    <<interface>>
+    + setOnCloseListener(listener: OnCloseListener): void
+  }
+
   Component <|.. BaseComponent
+  Component <|-- SectionContainer
+
   BaseComponent <|-- ImageComponent
   BaseComponent <|-- NoteComponent
   BaseComponent <|-- TodoComponent
@@ -199,8 +214,11 @@ classDiagram
   BaseComponent <|-- PageComponent
   BaseComponent <|-- PageItemComponent
 
+  Composable <|-- SectionContainer
   Composable <|.. PageComponent
   Composable <|.. PageItemComponent
+
+  SectionContainer <|.. PageItemComponent
 
 ```
 
