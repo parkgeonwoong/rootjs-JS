@@ -1,6 +1,7 @@
 import { Component } from './components/component.js';
 import { InputDialog } from './components/dialog/dialog.js';
 import { MediaSectionInput } from './components/input/media-input.js';
+import { TextSectionInput } from './components/input/text-input.js';
 import { ImageComponent } from './components/page/item/image.js';
 import { NoteComponent } from './components/page/item/note.js';
 import { TodoComponent } from './components/page/item/todo.js';
@@ -16,9 +17,6 @@ class App {
 
     const video = new VideoComponent('Video Title', 'https://youtu.be/D9tAKLTktY0');
     this.page.addChild(video);
-
-    const note = new NoteComponent('Note Title', 'Note Body');
-    this.page.addChild(note);
 
     const todo = new TodoComponent('Todo Title', 'Todo Item');
     this.page.addChild(todo);
@@ -37,6 +35,24 @@ class App {
       dialog.setOnSubmitListener(() => {
         const image = new ImageComponent(inputSection.title, inputSection.url);
         this.page.addChild(image);
+        dialog.removeFrom(dialogRoot);
+      });
+    });
+
+    const noteBtn = document.querySelector('#new-note')! as HTMLButtonElement;
+    noteBtn.addEventListener('click', () => {
+      const dialog = new InputDialog();
+      const inputSection = new TextSectionInput();
+
+      dialog.addChild(inputSection);
+      dialog.attachTo(dialogRoot);
+
+      dialog.setOnCloseListener(() => {
+        dialog.removeFrom(dialogRoot);
+      });
+      dialog.setOnSubmitListener(() => {
+        const note = new NoteComponent(inputSection.title, inputSection.body);
+        this.page.addChild(note);
         dialog.removeFrom(dialogRoot);
       });
     });
