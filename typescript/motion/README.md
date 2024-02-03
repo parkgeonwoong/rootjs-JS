@@ -77,31 +77,16 @@
 ### 3. 컨트롤 패널 기능
 
 - [x] 공통적인 Input 다이어로그창을 생성한다.
-
-##### 이미지 등록 기능
-
-- [ ] 버튼 클릭 시, 타이틀, URL을 등록하는 다이어로그창을 생성한다.
-- [ ] 등록 버튼 클릭 시, document에 이미지 등록한다.
-
-##### 비디오 등록 기능
-
-- [ ] 버튼 클릭 시, 타이틀, URL을 등록하는 다이어로그창을 생성한다.
-- [ ] 등록 버튼 클릭 시, document에 이미지 등록한다.
-
-##### 노트 등록 기능
-
-- [ ] 버튼 클릭 시, 타이틀, 바디를 등록하는 다이어로그창을 생성한다.
-- [ ] 등록 버튼 클릭 시, document에 이미지 등록한다.
-
-##### 할일 등록 기능
-
-- [ ] 버튼 클릭 시, 타이틀, 바디를 등록하는 다이어로그창을 생성한다.
-- [ ] 등록 버튼 클릭 시, document에 이미지 등록한다.
+- [ ] 미디어 등록하는 클래스 생성한다.
+- [ ] 텍스트 등록하는 클래스 생성한다.
+- [ ] 이미지 등록 연결한다.
+- [ ] 비디오 등록 연결한다.
+- [ ] 노트 등록 연결한다.
+- [ ] 할일 등록 연결한다.
 
 ##### 추가 기능
 
 - [ ] 드로그앤 드롭 기능 구현한다.
-- [ ] 삭제 기능 구현한다.
 
 ---
 
@@ -151,7 +136,7 @@ classDiagram
   }
 
   class App {
-    - page: PageComponent
+    - page: Component & Composable
     + constructor(appRoot: HTMLElement)
   }
 
@@ -167,11 +152,13 @@ classDiagram
   }
 
   class PageComponent {
+    - pageItemConstructor: SectionContainerConstructor
     + constructor()
     + addChild(section: Component): void
   }
 
   class PageItemComponent {
+    - closeListener?: OnCloseListener;
     + constructor()
     + addChild(child: Component): void
   }
@@ -206,19 +193,28 @@ classDiagram
     + setOnCloseListener(listener: OnCloseListener): void
   }
 
+  class InputDialog {
+    - closeListener?: OnCloseListener;
+    - sumbitListener?: OnSubmitListener;
+    + setOnCloseListener(listener: OnCloseListener): void
+    + setOnSubmitListener(listener: OnSubmitListener): void
+    + addChild(child: Component): void
+  }
+
   Component <|.. BaseComponent
   Component <|-- SectionContainer
 
+  BaseComponent <|-- InputDialog
+  BaseComponent <|-- PageComponent
+  BaseComponent <|-- PageItemComponent
   BaseComponent <|-- ImageComponent
   BaseComponent <|-- NoteComponent
   BaseComponent <|-- TodoComponent
   BaseComponent <|-- VideoComponent
-  BaseComponent <|-- PageComponent
-  BaseComponent <|-- PageItemComponent
 
+  Composable <|.. InputDialog
   Composable <|-- SectionContainer
   Composable <|.. PageComponent
-  Composable <|.. PageItemComponent
 
   SectionContainer <|.. PageItemComponent
 
