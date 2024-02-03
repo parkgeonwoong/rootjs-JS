@@ -15,12 +15,6 @@ class App {
     this.page = new PageComponent(PageItemComponent);
     this.page.attachTo(appRoot);
 
-    const video = new VideoComponent('Video Title', 'https://youtu.be/D9tAKLTktY0');
-    this.page.addChild(video);
-
-    const todo = new TodoComponent('Todo Title', 'Todo Item');
-    this.page.addChild(todo);
-
     const imageBtn = document.querySelector('#new-image')! as HTMLButtonElement;
     imageBtn.addEventListener('click', () => {
       const dialog = new InputDialog();
@@ -39,6 +33,24 @@ class App {
       });
     });
 
+    const videoBtn = document.querySelector('#new-video')! as HTMLButtonElement;
+    videoBtn.addEventListener('click', () => {
+      const dialog = new InputDialog();
+      const inputSection = new MediaSectionInput();
+
+      dialog.addChild(inputSection);
+      dialog.attachTo(dialogRoot);
+
+      dialog.setOnCloseListener(() => {
+        dialog.removeFrom(dialogRoot);
+      });
+      dialog.setOnSubmitListener(() => {
+        const video = new VideoComponent(inputSection.title, inputSection.url);
+        this.page.addChild(video);
+        dialog.removeFrom(dialogRoot);
+      });
+    });
+
     const noteBtn = document.querySelector('#new-note')! as HTMLButtonElement;
     noteBtn.addEventListener('click', () => {
       const dialog = new InputDialog();
@@ -53,6 +65,25 @@ class App {
       dialog.setOnSubmitListener(() => {
         const note = new NoteComponent(inputSection.title, inputSection.body);
         this.page.addChild(note);
+        dialog.removeFrom(dialogRoot);
+      });
+    });
+
+    const todoBtn = document.querySelector('#new-todo')! as HTMLButtonElement;
+    todoBtn.addEventListener('click', () => {
+      const dialog = new InputDialog();
+      const inputSection = new TextSectionInput();
+
+      dialog.addChild(inputSection);
+      dialog.attachTo(dialogRoot);
+
+      dialog.setOnCloseListener(() => {
+        dialog.removeFrom(dialogRoot);
+      });
+
+      dialog.setOnSubmitListener(() => {
+        const todo = new TodoComponent(inputSection.title, inputSection.body);
+        this.page.addChild(todo);
         dialog.removeFrom(dialogRoot);
       });
     });
