@@ -133,6 +133,7 @@ classDiagram
   class Component {
     <<interface>>
     + attachTo(parent: HTMLElement, position?: InsertPosition): void
+    + removeFrom(parent: HTMLElement): void
   }
 
   class App {
@@ -161,6 +162,7 @@ classDiagram
     - closeListener?: OnCloseListener;
     + constructor()
     + addChild(child: Component): void
+    + setOnCloseListener(listener: OnCloseListener): void
   }
 
   class ImageComponent {
@@ -201,6 +203,28 @@ classDiagram
     + addChild(child: Component): void
   }
 
+  class MediaData {
+    <<interface>>
+    - title: string
+    - url: string
+  }
+
+  class TextData {
+    <<interface>>
+    - title: string
+    - body: string
+  }
+
+  class TextSectionInput {
+    + get title(): string
+    + get body(): string
+  }
+
+  class MediaSectionInput {
+    + get title(): string
+    + get url(): string
+  }
+
   Component <|.. BaseComponent
   Component <|-- SectionContainer
 
@@ -211,12 +235,17 @@ classDiagram
   BaseComponent <|-- NoteComponent
   BaseComponent <|-- TodoComponent
   BaseComponent <|-- VideoComponent
+  BaseComponent <|-- MediaSectionInput
+  BaseComponent <|-- TextSectionInput
 
   Composable <|.. InputDialog
   Composable <|-- SectionContainer
   Composable <|.. PageComponent
 
   SectionContainer <|.. PageItemComponent
+
+  MediaData <|.. MediaSectionInput
+  TextData <|.. TextSectionInput
 
 ```
 
