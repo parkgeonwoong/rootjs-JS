@@ -83,6 +83,9 @@ export class PageItemComponent extends BaseComponent<HTMLElement> implements Sec
 }
 
 export class PageComponent extends BaseComponent<HTMLUListElement> implements Composable {
+  private dragTarget?: SectionContainer;
+  private dropTarget?: SectionContainer;
+
   constructor(private pageItemConstructor: SectionContainerConstructor) {
     super(`<ul class="page"></ul>`);
 
@@ -102,6 +105,13 @@ export class PageComponent extends BaseComponent<HTMLUListElement> implements Co
   onDrop(event: DragEvent) {
     event.preventDefault();
     console.log('onDrop');
+    if (!this.dropTarget) {
+      return;
+    }
+    if (this.dragTarget && this.dragTarget !== this.dropTarget) {
+      this.dragTarget.removeFrom(this.element);
+      this.dropTarget.attach(this.dragTarget, 'beforebegin');
+    }
   }
 
   addChild(section: Component) {
@@ -112,7 +122,22 @@ export class PageComponent extends BaseComponent<HTMLUListElement> implements Co
       item.removeFrom(this.element);
     });
     item.setOnDragStateListener((target: SectionContainer, state: DragState) => {
-      console.log(target, state);
+      switch (state) {
+        case 'start':
+          this.dragTarget = target;
+          break;
+        case 'end':
+          this.dragTarget = undefined;
+          break;
+        case 'enter':
+          this.dropTarget = target;
+          break;
+        case 'leave':
+          this.dropTarget = undefined;
+          break;
+        default:
+          throw new Error(`지원하지 않는 상태: ${state}`);
+      }
     });
   }
 }
