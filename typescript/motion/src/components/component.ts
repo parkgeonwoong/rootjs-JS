@@ -24,7 +24,7 @@ export class BaseComponent<T extends HTMLElement> implements Component {
     parent.removeChild(this.element);
   }
 
-  attach(component: Component, position?: InsertPosition) {
+  attach(component: Component, position: InsertPosition = 'afterbegin') {
     component.attachTo(this.element, position);
   }
 }
