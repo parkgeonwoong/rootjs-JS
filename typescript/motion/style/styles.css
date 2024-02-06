@@ -193,8 +193,6 @@ body {
 }
 
 /* -- PAGE ITEM -- */
-
-/* -- PAGE ITEM -- */
 .page-item {
   margin: 1.5em;
   display: flex;
@@ -259,4 +257,9 @@ body {
 .todo-label {
   padding: 1em;
   color: var(--smokywhite);
+}
+
+/* --- Drag & Drop --- */
+.mute-children * {
+  pointer-events: none;
 }
