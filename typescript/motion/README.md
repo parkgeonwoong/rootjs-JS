@@ -131,21 +131,29 @@
 
 ```mermaid
 classDiagram
+  class App {
+    - page: Component & Composable
+    - dialogRoot: HTMLElement
+    + bindElementToDialog(selector: string, InputComponent: InputComonentConstructor<T>, makeSection: (input: T) => Component): void
+  }
+
   class Component {
     <<interface>>
     + attachTo(parent: HTMLElement, position?: InsertPosition): void
     + removeFrom(parent: HTMLElement): void
+    + attach(component: Component, position?: InsertPosition): void
+    + registerEventListener(type: K,
+    listener: (this: HTMLElement, ev: HTMLElementEventMap[K])): void
   }
 
-  class App {
-    - page: Component & Composable
-    + constructor(appRoot: HTMLElement)
-  }
+
 
   class BaseComponent {
     - element: T
-    + constructor(htmlString: string)
     + attachTo(parent: HTMLElement, position?: InsertPosition): void
+    + removeFrom(parent: HTMLElement): void
+    + attach(component: Component, position?: InsertPosition): void
+    + registerEventListener(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K])): void
   }
 
   class Composable {
@@ -154,46 +162,60 @@ classDiagram
   }
 
   class PageComponent {
+    - children: Set<SectionContainer>
+    - dragTarget?: SectionContainer
+    - dropTarget?: SectionContainer
     - pageItemConstructor: SectionContainerConstructor
-    + constructor()
+    + onDragOver(_: DragEvent): void
+    + onDrop(_: DragEvent): void
     + addChild(section: Component): void
+    + updateSections(state: 'mute' | 'unmute'): void
   }
 
   class PageItemComponent {
     - closeListener?: OnCloseListener;
-    + constructor()
+    - dragStateListener?: OnDragStateListener;
+    + onDragStart(_: DragEvent): void
+    + onDragEnd(_: DragEvent): void
+    + onDragEnter(_: DragEvent): void
+    + onDragLeave(_: DragEvent): void
+    + onDropped(_: DragEvent): void
+    + notifyDragObservers(state: 'start' | 'end'): void
     + addChild(child: Component): void
     + setOnCloseListener(listener: OnCloseListener): void
+    + setOnDragStateListener(listener: OnDragStateListener): void
+    + muteChildren(state: 'mute' | 'unmute'): void
+    + getBoundingRect(): DOMRect
   }
 
   class ImageComponent {
     - title: string
     - url: string
-    + constructor(title: string, url: string)
   }
 
   class NoteComponent {
     - title: string
     - body: string
-    + constructor(title: string, body: string)
   }
 
   class TodoComponent {
     - title: string
     - body: string
-    + constructor(title: string, body: string)
   }
 
   class VideoComponent {
     - title: string
     - url: string
-    + constructor(title: string, url: string)
     + convertToEmbeddedURL(url: string): string
   }
 
   class SectionContainer {
     <<interface>>
     + setOnCloseListener(listener: OnCloseListener): void
+    + setOnDragStateListener(listener: OnDragStateListener): void
+    + muteChildren(state: 'mute' | 'unmute'): void
+    + getBoundingRect(): DOMRect
+    + onDropped(): void
   }
 
   class InputDialog {
@@ -226,22 +248,49 @@ classDiagram
     + get url(): string
   }
 
+  class Draggable {
+    <<interface>>
+    + onDragStart(_: DragEvent): void
+    + onDragEnd(_: DragEvent): void
+  }
+
+  class Hoverable {
+    <<interface>>
+    + onDragEnter(_: DragEvent): void
+    + onDragLeave(_: DragEvent): void
+  }
+
+  class Droppable {
+    <<interface>>
+    + onDragOver(_: DragEvent): void
+    + onDrop(_: DragEvent): void
+  }
+
+
+  Draggable <|-- SectionContainer
+  Draggable <|.. PageItemComponent
+
+  Hoverable <|-- SectionContainer
+  Hoverable <|.. PageItemComponent
+
+  Droppable <|.. PageComponent
+
+  Composable <|.. PageComponent
+  Composable <|-- SectionContainer
+  Composable <|.. InputDialog
+
   Component <|.. BaseComponent
   Component <|-- SectionContainer
 
-  BaseComponent <|-- InputDialog
-  BaseComponent <|-- PageComponent
   BaseComponent <|-- PageItemComponent
+  BaseComponent <|-- PageComponent
+  BaseComponent <|-- InputDialog
   BaseComponent <|-- ImageComponent
   BaseComponent <|-- NoteComponent
   BaseComponent <|-- TodoComponent
   BaseComponent <|-- VideoComponent
   BaseComponent <|-- MediaSectionInput
   BaseComponent <|-- TextSectionInput
-
-  Composable <|.. InputDialog
-  Composable <|-- SectionContainer
-  Composable <|.. PageComponent
 
   SectionContainer <|.. PageItemComponent
 
