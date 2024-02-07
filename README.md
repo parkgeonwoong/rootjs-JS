@@ -30,10 +30,6 @@
 |      jest      |        테스트 코드 학습        |
 |   typescript   |       타입스크립트 학습        |
 
-- JS로 React, SPA 구현
-- 리팩토링 학습
-- JS 도구들 사용
-
 <br>
 
 ---
@@ -45,4 +41,4 @@
 |             쇼핑목록              |  `이벤트 위임`   |     [dom](./brower/dom/실습/)     | <img src="./assets/1.event_delegation.png" width="140" height="150" /> |
 |             좌표찾기              | `좌표(Web APIs)` | [webAPIs](./brower/webAPIs/실습/) |    <img src="./assets/2.coordinate.png" width="200" height="120" />    |
 |          당근 찾기 게임           |     `Event`      |  [event](./brower/event/실습2/)   |      <img src="./assets/3.event.png" width="200" height="110" />       |
-| 다목적 콘텐츠 관리 플랫폼(Motion) |   `TypeScript`   |  [motion](./typescript/motion/)   |                              현재 진행중                               |
+| 다목적 콘텐츠 관리 플랫폼(Motion) |   `TypeScript`   |  [motion](./typescript/motion/)   |        <img src="./assets/4.ts.png" width="200" height="110" />        |
